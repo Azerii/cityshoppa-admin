@@ -1,9 +1,9 @@
 {
-  "name": "react-material-dashboard",
-  "author": "DeviasIO",
+  "name": "cityshoppa-admin",
+  "author": "Azerii",
   "licence": "MIT",
   "version": "1.0.0",
-  "private": false,
+  "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
