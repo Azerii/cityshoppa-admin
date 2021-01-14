@@ -8,9 +8,12 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Logo from 'src/components/Logo';
+// import theme from 'src/theme';
 
-const useStyles = makeStyles(({
-  root: {},
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.improv,
+  },
   toolbar: {
     height: 64
   }

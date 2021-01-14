@@ -1,20 +1,23 @@
-import React from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
   Box,
   Button,
   Container,
-  Grid,
-  Link,
+  // Grid,
+  // Link,
   TextField,
   Typography,
   makeStyles
 } from '@material-ui/core';
-import FacebookIcon from 'src/icons/Facebook';
-import GoogleIcon from 'src/icons/Google';
+// import FacebookIcon from 'src/icons/Facebook';
+// import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
+import loginUser from 'src/utils/api/login';
+import { encrypt } from 'src/utils/crypto';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,13 +30,42 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginView = () => {
   const classes = useStyles();
-  const navigate = useNavigate();
+
+  const [alert, setAlert] = useState(false);
+  const [alertData, setAlertData] = useState({ type: 'warning', text: '' });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const identifier = document.querySelector('#email').value;
+    const password = document.querySelector('#password').value;
+
+    const data = await loginUser({
+      identifier,
+      password
+    });
+
+    if (data && data.user && data.jwt) {
+      const { user } = data;
+      const token = encrypt(data.jwt);
+      const tokenExpiry = new Date().getTime() + 24 * 60 * 60 * 1000;
+
+      const state = { user, token, tokenExpiry };
+
+      localStorage.setItem('admin:root', JSON.stringify(state));
+
+      window.location.replace('/app/dashboard');
+    } else {
+      setAlert(true);
+      setAlertData({
+        type: 'error',
+        text: 'Something went wrong. Try again.'
+      });
+    }
+  };
 
   return (
-    <Page
-      className={classes.root}
-      title="Login"
-    >
+    <Page className={classes.root} title="Login">
       <Box
         display="flex"
         flexDirection="column"
@@ -43,43 +75,54 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
+              email: 'admin@yopmail.com',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
-              email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-              password: Yup.string().max(255).required('Password is required')
+              email: Yup.string()
+                .email('Must be a valid email')
+                .max(255)
+                .required('Email is required'),
+              password: Yup.string()
+                .max(255)
+                .required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
+            onSubmit={(e) => handleSubmit(e)}
           >
             {({
               errors,
               handleBlur,
               handleChange,
-              handleSubmit,
+              // handleSubmit,
               isSubmitting,
               touched,
               values
             }) => (
               <form onSubmit={handleSubmit}>
+                {alert && (
+                  <Box mb={3}>
+                    <Alert
+                      severity={alertData.type}
+                      onClose={() => setAlert(false)}
+                    >
+                      <AlertTitle>{alertData.type}</AlertTitle>
+                      {alertData.text}
+                    </Alert>
+                  </Box>
+                )}
                 <Box mb={3}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                    Sign in
+                  <Typography color="textPrimary" variant="h2">
+                    CityShoppa Admin
                   </Typography>
-                  <Typography
+                  {/* <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
                     Sign in on the internal platform
-                  </Typography>
+                  </Typography> */}
                 </Box>
-                <Grid
+                {/* <Grid
                   container
                   spacing={3}
                 >
@@ -126,10 +169,12 @@ const LoginView = () => {
                   >
                     or login with email address
                   </Typography>
-                </Box>
+                </Box> */}
                 <TextField
+                  id="email"
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
+                  required
                   helperText={touched.email && errors.email}
                   label="Email Address"
                   margin="normal"
@@ -141,8 +186,10 @@ const LoginView = () => {
                   variant="outlined"
                 />
                 <TextField
+                  id="password"
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
+                  required
                   helperText={touched.password && errors.password}
                   label="Password"
                   margin="normal"
@@ -162,10 +209,10 @@ const LoginView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign in now
+                    Sign in
                   </Button>
                 </Box>
-                <Typography
+                {/* <Typography
                   color="textSecondary"
                   variant="body1"
                 >
@@ -178,7 +225,7 @@ const LoginView = () => {
                   >
                     Sign up
                   </Link>
-                </Typography>
+                </Typography> */}
               </form>
             )}
           </Formik>

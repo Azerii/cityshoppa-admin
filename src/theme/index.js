@@ -7,13 +7,14 @@ const theme = createMuiTheme({
     background: {
       dark: '#F4F6F8',
       default: colors.common.white,
-      paper: colors.common.white
+      paper: colors.common.white,
+      improv: colors.blueGrey[50]
     },
     primary: {
-      main: colors.indigo[500]
+      main: colors.deepOrange[500]
     },
     secondary: {
-      main: colors.indigo[500]
+      main: '#3d4b61'
     },
     text: {
       primary: colors.blueGrey[900],
