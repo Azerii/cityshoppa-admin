@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
@@ -36,6 +36,21 @@ const useStyles = makeStyles((theme) => ({
 const DashboardLayout = () => {
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage && !localStorage.getItem('admin:root').length) {
+      navigate('/login');
+    } else if (localStorage && localStorage.getItem('admin:root').length) {
+      const data = JSON.parse(localStorage.getItem('admin:root'));
+      const d = new Date().getTime();
+      const expiry = data.tokenExpiry;
+
+      if (d >= expiry) {
+        localStorage.setItem('admin:root', '');
+      }
+    }
+  });
 
   return (
     <div className={classes.root}>

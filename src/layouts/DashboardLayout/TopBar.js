@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
 
 const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   const classes = useStyles();
-  // const [notifications] = useState([]);
+  const navigate = useNavigate();
 
   return (
     <AppBar className={clsx(classes.root, className)} elevation={2} {...rest}>
@@ -49,7 +49,14 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
               <NotificationsIcon />
             </Badge>
           </IconButton> */}
-          <IconButton color="secondary">
+          <IconButton
+            color="secondary"
+            onClick={() => {
+              localStorage.setItem('admin:root', '');
+
+              navigate('/login');
+            }}
+          >
             <Typography>Logout</Typography>
             <InputIcon />
           </IconButton>
