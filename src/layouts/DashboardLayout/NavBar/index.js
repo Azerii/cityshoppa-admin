@@ -14,13 +14,13 @@ import {
 } from '@material-ui/core';
 import {
   // AlertCircle as AlertCircleIcon,
-  BarChart as BarChartIcon,
-  Lock as LockIcon,
-  Settings as SettingsIcon,
+  BarChart as BarChartIcon
+  // Lock as LockIcon,
+  // Settings as SettingsIcon
   // ShoppingBag as ShoppingBagIcon,
   // User as UserIcon,
   // UserPlus as UserPlusIcon,
-  Users as UsersIcon
+  // Users as UsersIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -38,9 +38,22 @@ const items = [
   },
   {
     href: '/app/users',
-    icon: UsersIcon,
+    // icon: UsersIcon,
     title: 'Users'
   },
+  {
+    href: '/app/businesses',
+    title: 'Businesses'
+  },
+  {
+    href: '/app/products',
+    title: 'Products'
+  },
+  {
+    href: '/app/services',
+    title: 'Services'
+  }
+
   // {
   //   href: '/app/products',
   //   icon: ShoppingBagIcon,
@@ -51,16 +64,16 @@ const items = [
   //   icon: UserIcon,
   //   title: 'Account'
   // },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
-  },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
-  }
+  // {
+  //   href: '/app/settings',
+  //   icon: SettingsIcon,
+  //   title: 'Settings'
+  // }
+  // {
+  //   href: '/login',
+  //   icon: LockIcon,
+  //   title: 'Login'
+  // }
   // {
   //   href: '/register',
   //   icon: UserPlusIcon,

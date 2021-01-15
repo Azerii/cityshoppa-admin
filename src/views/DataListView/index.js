@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Container, makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Results from './Results';
 import Toolbar from './Toolbar';
 import tempData from './data';
+import FullScreenDialog from '../forms/modal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,11 +19,17 @@ const useStyles = makeStyles((theme) => ({
 const DataListView = ({ data, contentType }) => {
   const classes = useStyles();
   const content = data || tempData;
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <Page className={classes.root} title="Users">
+      <FullScreenDialog
+        title={contentType}
+        open={openModal}
+        setOpen={setOpenModal}
+      />
       <Container maxWidth={false}>
-        <Toolbar contentType={contentType} />
+        <Toolbar contentType={contentType} setOpenModal={setOpenModal} />
         <Box mt={3}>
           <Results content={content} contentType={contentType} />
         </Box>

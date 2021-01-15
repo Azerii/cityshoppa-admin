@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
-  Box,
-  Button,
+  // Box,
+  // Button,
   Card,
   CardContent,
-  CardHeader,
-  Divider,
+  // CardHeader,
+  // Divider,
   Grid,
   TextField,
   makeStyles
@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const ProfileDetails = ({ className, ...rest }) => {
+const TempForm = ({ className, ...rest }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
     username: 'cityshoppa',
@@ -54,8 +54,8 @@ const ProfileDetails = ({ className, ...rest }) => {
       {...rest}
     >
       <Card>
-        <CardHeader subheader="The information can be edited" title="Profile" />
-        <Divider />
+        {/* <CardHeader subheader="The information can be edited" title="Profile" />
+        <Divider /> */}
         <CardContent>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
@@ -76,7 +76,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={values.}
+                value={values.lastname}
                 variant="outlined"
               />
             </Grid> */}
@@ -134,19 +134,19 @@ const ProfileDetails = ({ className, ...rest }) => {
             </Grid>
           </Grid>
         </CardContent>
-        <Divider />
+        {/* <Divider />
         <Box display="flex" justifyContent="flex-end" p={2}>
           <Button color="primary" variant="contained">
             Save details
           </Button>
-        </Box>
+        </Box> */}
       </Card>
     </form>
   );
 };
 
-ProfileDetails.propTypes = {
+TempForm.propTypes = {
   className: PropTypes.string
 };
 
-export default ProfileDetails;
+export default TempForm;

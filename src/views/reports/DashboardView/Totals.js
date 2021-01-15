@@ -55,7 +55,7 @@ const Totals = ({ className, name, ...rest }) => {
             </Typography>
           </Grid>
           <Grid item>
-            <Avatar className={classes.avatar}>
+            <Avatar>
               {name === 'users' && <People />}
               {name === 'businesses' && <BusinessCenter />}
               {name === 'products' && <Loyalty />}
