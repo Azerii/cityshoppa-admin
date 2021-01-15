@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({ className, contentType, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -36,7 +36,9 @@ const Toolbar = ({ className, ...rest }) => {
           Export
         </Button> */}
         <Button color="primary" variant="contained">
-          Add New User
+          Add New
+          {' '}
+          {contentType}
         </Button>
       </Box>
       {/* <Box mt={3}>
@@ -69,7 +71,8 @@ const Toolbar = ({ className, ...rest }) => {
 };
 
 Toolbar.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  contentType: PropTypes.string.isRequired
 };
 
 export default Toolbar;

@@ -12,13 +12,14 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles({
   root: {}
-}));
+});
 
 const Password = ({ className, ...rest }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
+    currentPassword: '',
     password: '',
     confirm: ''
   });
@@ -31,20 +32,24 @@ const Password = ({ className, ...rest }) => {
   };
 
   return (
-    <form
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
+    <form className={clsx(classes.root, className)} {...rest}>
       <Card>
-        <CardHeader
-          subheader="Update password"
-          title="Password"
-        />
+        <CardHeader subheader="Update password" title="Password" />
         <Divider />
         <CardContent>
           <TextField
             fullWidth
-            label="Password"
+            label="Current Password"
+            margin="normal"
+            name="currentPassword"
+            onChange={handleChange}
+            type="password"
+            value={values.currentPassword}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="New Password"
             margin="normal"
             name="password"
             onChange={handleChange}
@@ -64,15 +69,8 @@ const Password = ({ className, ...rest }) => {
           />
         </CardContent>
         <Divider />
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          p={2}
-        >
-          <Button
-            color="primary"
-            variant="contained"
-          >
+        <Box display="flex" justifyContent="flex-end" p={2}>
+          <Button color="primary" variant="contained">
             Update
           </Button>
         </Box>

@@ -1,12 +1,9 @@
 import axios from 'axios';
+import { API_HOST } from '../config';
 
 const loginUser = async (cred) => {
   try {
-    const res = await axios.post(
-      `${process.env.API_HOST
-        || 'https://cityshoppa.herokuapp.com'}/auth/local`,
-      cred
-    );
+    const res = await axios.post(`${API_HOST}/auth/local`, cred);
 
     if (res.data.user && res.data.jwt) {
       return res.data;

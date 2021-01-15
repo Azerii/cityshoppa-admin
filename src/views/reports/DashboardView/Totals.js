@@ -12,7 +12,14 @@ import {
   makeStyles
 } from '@material-ui/core';
 // import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+import {
+  People,
+  Loyalty,
+  LocationCity,
+  Category,
+  BusinessCenter,
+  Router
+} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,38 +39,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TotalCustomers = ({ className, ...rest }) => {
+const Totals = ({ className, name, ...rest }) => {
   const classes = useStyles();
 
   return (
-    <Card
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
+    <Card className={clsx(classes.root, className)} {...rest}>
       <CardContent>
-        <Grid
-          container
-          justify="space-between"
-          spacing={3}
-        >
+        <Grid container justify="space-between" spacing={3}>
           <Grid item>
-            <Typography
-              color="textSecondary"
-              gutterBottom
-              variant="h6"
-            >
-              TOTAL CUSTOMERS
+            <Typography color="textSecondary" gutterBottom variant="h6">
+              {name.toUpperCase()}
             </Typography>
-            <Typography
-              color="textPrimary"
-              variant="h3"
-            >
+            <Typography color="textPrimary" variant="h3">
               1,600
             </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <PeopleIcon />
+              {name === 'users' && <People />}
+              {name === 'businesses' && <BusinessCenter />}
+              {name === 'products' && <Loyalty />}
+              {name === 'services' && <Router />}
+              {name === 'categories' && <Category />}
+              {name === 'cities' && <LocationCity />}
             </Avatar>
           </Grid>
         </Grid>
@@ -91,8 +89,9 @@ const TotalCustomers = ({ className, ...rest }) => {
   );
 };
 
-TotalCustomers.propTypes = {
-  className: PropTypes.string
+Totals.propTypes = {
+  className: PropTypes.string,
+  name: PropTypes.string.isRequired
 };
 
-export default TotalCustomers;
+export default Totals;

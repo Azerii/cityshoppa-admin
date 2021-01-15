@@ -1,16 +1,12 @@
 import React from 'react';
-import {
-  Container,
-  Grid,
-  makeStyles
-} from '@material-ui/core';
+import { Container, Grid, makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
 // import Budget from './Budget';
 // import LatestOrders from './LatestOrders';
 // import LatestProducts from './LatestProducts';
 // import Sales from './Sales';
 // import TasksProgress from './TasksProgress';
-import TotalCustomers from './TotalCustomers';
+import Totals from './Totals';
 // import TotalProfit from './TotalProfit';
 // import TrafficByDevice from './TrafficByDevice';
 
@@ -27,15 +23,9 @@ const Dashboard = () => {
   const classes = useStyles();
 
   return (
-    <Page
-      className={classes.root}
-      title="Dashboard"
-    >
+    <Page className={classes.root} title="Dashboard">
       <Container maxWidth={false}>
-        <Grid
-          container
-          spacing={3}
-        >
+        <Grid container spacing={3}>
           {/* <Grid
             item
             lg={3}
@@ -45,14 +35,23 @@ const Dashboard = () => {
           >
             <Budget />
           </Grid> */}
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <TotalCustomers />
+          <Grid item lg={6} sm={6} xl={3} xs={12}>
+            <Totals name="users" />
+          </Grid>
+          <Grid item lg={6} sm={6} xl={3} xs={12}>
+            <Totals name="businesses" />
+          </Grid>
+          <Grid item lg={6} sm={6} xl={3} xs={12}>
+            <Totals name="products" />
+          </Grid>
+          <Grid item lg={6} sm={6} xl={3} xs={12}>
+            <Totals name="services" />
+          </Grid>
+          <Grid item lg={6} sm={6} xl={3} xs={12}>
+            <Totals name="categories" />
+          </Grid>
+          <Grid item lg={6} sm={6} xl={3} xs={12}>
+            <Totals name="cities" />
           </Grid>
           {/* <Grid
             item

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
-  Avatar,
+  // Avatar,
   Box,
   Card,
   Checkbox,
@@ -14,10 +13,12 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
+  // Typography,
   makeStyles
 } from '@material-ui/core';
-import getInitials from 'src/utils/getInitials';
+// import getInitials from 'src/utils/getInitials';
+import { v4 as uuid } from 'uuid';
+import * as models from '../../utils/listModel';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -26,49 +27,52 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Results = ({ className, customers, ...rest }) => {
+const Results = ({
+  className, content, contentType, ...rest
+}) => {
   const classes = useStyles();
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+  const [selectedContentIds, setSelectedContentIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const model = models.default[contentType];
 
   const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
+    let newSelectedContentIds;
 
     if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
+      newSelectedContentIds = content.map((item) => item.id);
     } else {
-      newSelectedCustomerIds = [];
+      newSelectedContentIds = [];
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedContentIds(newSelectedContentIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCustomerIds.indexOf(id);
-    let newSelectedCustomerIds = [];
+    const selectedIndex = selectedContentIds.indexOf(id);
+    let newSelectedContentIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds,
+      newSelectedContentIds = newSelectedContentIds.concat(
+        selectedContentIds,
         id
       );
     } else if (selectedIndex === 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(1)
+      newSelectedContentIds = newSelectedContentIds.concat(
+        selectedContentIds.slice(1)
       );
-    } else if (selectedIndex === selectedCustomerIds.length - 1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, -1)
+    } else if (selectedIndex === selectedContentIds.length - 1) {
+      newSelectedContentIds = newSelectedContentIds.concat(
+        selectedContentIds.slice(0, -1)
       );
     } else if (selectedIndex > 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, selectedIndex),
-        selectedCustomerIds.slice(selectedIndex + 1)
+      newSelectedContentIds = newSelectedContentIds.concat(
+        selectedContentIds.slice(0, selectedIndex),
+        selectedContentIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedContentIds(newSelectedContentIds);
   };
 
   const handleLimitChange = (event) => {
@@ -88,57 +92,60 @@ const Results = ({ className, customers, ...rest }) => {
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
+                    checked={selectedContentIds.length === content.length}
                     color="primary"
                     indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
+                      selectedContentIds.length > 0
+                      && selectedContentIds.length < content.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
-                <TableCell>Name</TableCell>
+                {model.map((item) => (
+                  <TableCell key={item}>{item}</TableCell>
+                ))}
+                {/* <TableCell>Name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Location</TableCell>
                 <TableCell>Phone</TableCell>
-                <TableCell>Registration date</TableCell>
+                <TableCell>Registration date</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.slice(0, 5).map((customer) => (
+              {content.slice(0, limit).map((item) => (
                 <TableRow
                   hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                  key={item.id}
+                  selected={selectedContentIds.indexOf(item.id) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
+                      checked={selectedContentIds.indexOf(item.id) !== -1}
+                      onChange={(event) => handleSelectOne(event, item.id)}
                       value="true"
                     />
                   </TableCell>
-                  <TableCell>
+                  {model.map((field) => (
+                    <TableCell key={uuid()}>{item[field]}</TableCell>
+                  ))}
+                  {/* <TableCell>
                     <Box alignItems="center" display="flex">
-                      <Avatar
-                        className={classes.avatar}
-                        src={customer.avatarUrl}
-                      >
-                        {getInitials(customer.name)}
+                      <Avatar className={classes.avatar} src={item.avatarUrl}>
+                        {getInitials(item.name)}
                       </Avatar>
                       <Typography color="textPrimary" variant="body1">
-                        {customer.name}
+                        {item.name}
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>{customer.email}</TableCell>
+                  <TableCell>{item.email}</TableCell>
                   <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
+                    {`${item.address.city}, ${item.address.state}, ${item.address.country}`}
                   </TableCell>
-                  <TableCell>{customer.phone}</TableCell>
+                  <TableCell>{item.phone}</TableCell>
                   <TableCell>
-                    {moment(customer.createdAt).format('DD/MM/YYYY')}
-                  </TableCell>
+                    {moment(item.createdAt).format('DD/MM/YYYY')}
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
@@ -147,7 +154,7 @@ const Results = ({ className, customers, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={customers.length}
+        count={content.length}
         onChangePage={handlePageChange}
         onChangeRowsPerPage={handleLimitChange}
         page={page}
@@ -160,7 +167,8 @@ const Results = ({ className, customers, ...rest }) => {
 
 Results.propTypes = {
   className: PropTypes.string,
-  customers: PropTypes.array.isRequired
+  content: PropTypes.array.isRequired,
+  contentType: PropTypes.string.isRequired
 };
 
 export default Results;

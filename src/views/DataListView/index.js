@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Box, Container, makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Results from './Results';
 import Toolbar from './Toolbar';
-import data from './data';
+import tempData from './data';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,20 +15,25 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CustomerListView = () => {
+const DataListView = ({ data, contentType }) => {
   const classes = useStyles();
-  const [customers] = useState(data);
+  const content = data || tempData;
 
   return (
     <Page className={classes.root} title="Users">
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar contentType={contentType} />
         <Box mt={3}>
-          <Results customers={customers} />
+          <Results content={content} contentType={contentType} />
         </Box>
       </Container>
     </Page>
   );
 };
 
-export default CustomerListView;
+DataListView.propTypes = {
+  data: PropTypes.array.isRequired,
+  contentType: PropTypes.string.isRequired
+};
+
+export default DataListView;
