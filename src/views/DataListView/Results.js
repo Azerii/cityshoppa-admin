@@ -6,7 +6,7 @@ import {
   // Avatar,
   Box,
   Card,
-  Checkbox,
+  // Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   avatar: {
     marginRight: theme.spacing(2)
+  },
+  tableCell: {
+    minWidth: '25vw'
   }
 }));
 
@@ -31,49 +34,49 @@ const Results = ({
   className, content, contentType, ...rest
 }) => {
   const classes = useStyles();
-  const [selectedContentIds, setSelectedContentIds] = useState([]);
+  // const [selectedContentIds, setSelectedContentIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const model = models.default[contentType];
 
-  const handleSelectAll = (event) => {
-    let newSelectedContentIds;
+  // const handleSelectAll = (event) => {
+  //   let newSelectedContentIds;
 
-    if (event.target.checked) {
-      newSelectedContentIds = content.map((item) => item.id);
-    } else {
-      newSelectedContentIds = [];
-    }
+  //   if (event.target.checked) {
+  //     newSelectedContentIds = content.map((item) => item.id);
+  //   } else {
+  //     newSelectedContentIds = [];
+  //   }
 
-    setSelectedContentIds(newSelectedContentIds);
-  };
+  //   setSelectedContentIds(newSelectedContentIds);
+  // };
 
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedContentIds.indexOf(id);
-    let newSelectedContentIds = [];
+  // const handleSelectOne = (event, id) => {
+  //   const selectedIndex = selectedContentIds.indexOf(id);
+  //   let newSelectedContentIds = [];
 
-    if (selectedIndex === -1) {
-      newSelectedContentIds = newSelectedContentIds.concat(
-        selectedContentIds,
-        id
-      );
-    } else if (selectedIndex === 0) {
-      newSelectedContentIds = newSelectedContentIds.concat(
-        selectedContentIds.slice(1)
-      );
-    } else if (selectedIndex === selectedContentIds.length - 1) {
-      newSelectedContentIds = newSelectedContentIds.concat(
-        selectedContentIds.slice(0, -1)
-      );
-    } else if (selectedIndex > 0) {
-      newSelectedContentIds = newSelectedContentIds.concat(
-        selectedContentIds.slice(0, selectedIndex),
-        selectedContentIds.slice(selectedIndex + 1)
-      );
-    }
+  //   if (selectedIndex === -1) {
+  //     newSelectedContentIds = newSelectedContentIds.concat(
+  //       selectedContentIds,
+  //       id
+  //     );
+  //   } else if (selectedIndex === 0) {
+  //     newSelectedContentIds = newSelectedContentIds.concat(
+  //       selectedContentIds.slice(1)
+  //     );
+  //   } else if (selectedIndex === selectedContentIds.length - 1) {
+  //     newSelectedContentIds = newSelectedContentIds.concat(
+  //       selectedContentIds.slice(0, -1)
+  //     );
+  //   } else if (selectedIndex > 0) {
+  //     newSelectedContentIds = newSelectedContentIds.concat(
+  //       selectedContentIds.slice(0, selectedIndex),
+  //       selectedContentIds.slice(selectedIndex + 1)
+  //     );
+  //   }
 
-    setSelectedContentIds(newSelectedContentIds);
-  };
+  //   setSelectedContentIds(newSelectedContentIds);
+  // };
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -90,7 +93,7 @@ const Results = ({
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
+                {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedContentIds.length === content.length}
                     color="primary"
@@ -100,9 +103,11 @@ const Results = ({
                     }
                     onChange={handleSelectAll}
                   />
-                </TableCell>
+                </TableCell> */}
                 {model.map((item) => (
-                  <TableCell key={item}>{item}</TableCell>
+                  <TableCell className={classes.tableCell} key={item}>
+                    {item}
+                  </TableCell>
                 ))}
                 {/* <TableCell>Name</TableCell>
                 <TableCell>Email</TableCell>
@@ -116,17 +121,21 @@ const Results = ({
                 <TableRow
                   hover
                   key={item.id}
-                  selected={selectedContentIds.indexOf(item.id) !== -1}
+                  // selected={selectedContentIds.indexOf(item.id) !== -1}
                 >
-                  <TableCell padding="checkbox">
+                  {/* <TableCell padding="checkbox">
                     <Checkbox
                       checked={selectedContentIds.indexOf(item.id) !== -1}
                       onChange={(event) => handleSelectOne(event, item.id)}
                       value="true"
                     />
-                  </TableCell>
+                  </TableCell> */}
                   {model.map((field) => (
-                    <TableCell key={uuid()}>{item[field]}</TableCell>
+                    <TableCell key={uuid()}>
+                      {item[field] && item[field].length > 25
+                        ? `${item[field].substr(0, 100)}...`
+                        : item[field]}
+                    </TableCell>
                   ))}
                   {/* <TableCell>
                     <Box alignItems="center" display="flex">

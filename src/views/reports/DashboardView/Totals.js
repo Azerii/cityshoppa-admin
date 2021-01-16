@@ -51,7 +51,7 @@ const Totals = ({ className, name, ...rest }) => {
               {name.toUpperCase()}
             </Typography>
             <Typography color="textPrimary" variant="h3">
-              1,600
+              {localStorage.getItem(name) || 0}
             </Typography>
           </Grid>
           <Grid item>

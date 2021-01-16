@@ -11,7 +11,9 @@ const getCollection = async (collectionType) => {
 
     if (res.data) {
       const count = res.data.length;
+      const list = res.data;
       localStorage.setItem(collectionType, count.toString());
+      localStorage.setItem(`${collectionType}List`, JSON.stringify(list));
 
       return res.data;
     }

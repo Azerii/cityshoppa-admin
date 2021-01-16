@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import DataListView from 'src/views/DataListView';
-import getCollection from 'src/utils/api/getCollection';
+// import getCollection from 'src/utils/api/getCollection';
 
 const ProductListView = () => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
-  async function fetchProducts() {
-    const res = await getCollection('products');
-    // console.log(res);
-    if (res) setProducts(res);
-  }
+  // async function fetchProducts() {
+  //   const res = await getCollection('products');
+  //   // console.log(res);
+  //   if (res) setProducts(res);
+  // }
 
-  useEffect(() => {
-    fetchProducts();
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts();
+  //   // eslint-disable-next-line
+  // }, []);
 
-  return <DataListView data={products} contentType="product" />;
+  return <DataListView contentType="product" />;
 };
 
 export default ProductListView;

@@ -7,9 +7,9 @@ const business = [
   'email',
   'address',
   'city',
-  'linkToMaps',
-  'products',
-  'services'
+  'linkToMaps'
+  // 'products',
+  // 'services'
 ];
 const product = [
   'id',

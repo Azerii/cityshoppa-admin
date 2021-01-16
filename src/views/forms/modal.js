@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 // import ListItemText from '@material-ui/core/ListItemText';
 // import ListItem from '@material-ui/core/ListItem';
@@ -29,9 +29,7 @@ const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function FullScreenDialog({
-  title, open, setOpen, handleSave, children
-}) {
+function FullScreenDialog({ title, open, setOpen }) {
   const classes = useStyles();
 
   return (
@@ -42,7 +40,7 @@ function FullScreenDialog({
       <Dialog
         fullScreen
         open={open}
-        onClose={handleSave}
+        // onClose={handleSave}
         TransitionComponent={Transition}
       >
         <AppBar className={classes.appBar}>
@@ -56,11 +54,11 @@ function FullScreenDialog({
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              {title}
+              {title.toUpperCase()}
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleSave}>
+            {/* <Button autoFocus color="inherit" onClick={handleSave}>
               save
-            </Button>
+            </Button> */}
           </Toolbar>
         </AppBar>
         {/* <List>
@@ -75,8 +73,7 @@ function FullScreenDialog({
             />
           </ListItem>
         </List> */}
-        {children}
-        <TempForm />
+        <TempForm title={title} setOpen={setOpen} />
       </Dialog>
     </div>
   );
@@ -85,9 +82,8 @@ function FullScreenDialog({
 FullScreenDialog.propTypes = {
   title: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
-  handleSave: PropTypes.func,
-  children: PropTypes.element
+  setOpen: PropTypes.func.isRequired
+  // handleSave: PropTypes.func
 };
 
 export default FullScreenDialog;

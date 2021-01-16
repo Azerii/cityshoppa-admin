@@ -18,6 +18,7 @@ import Page from 'src/components/Page';
 import loginUser from 'src/utils/api/login';
 import { encrypt } from 'src/utils/crypto';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import Spinner from 'src/components/Spinner';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,18 +34,19 @@ const LoginView = () => {
 
   const [alert, setAlert] = useState(false);
   const [alertData, setAlertData] = useState({ type: 'warning', text: '' });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const identifier = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
-
+    setLoading(true);
     const data = await loginUser({
       identifier,
       password
     });
-
+    setLoading(false);
     if (data && data.user && data.jwt) {
       const { user } = data;
       const token = encrypt(data.jwt);
@@ -201,16 +203,20 @@ const LoginView = () => {
                   variant="outlined"
                 />
                 <Box my={2}>
-                  <Button
-                    color="primary"
-                    disabled={isSubmitting}
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                  >
-                    Sign in
-                  </Button>
+                  {loading ? (
+                    <Spinner />
+                  ) : (
+                    <Button
+                      color="primary"
+                      disabled={isSubmitting}
+                      fullWidth
+                      size="large"
+                      type="submit"
+                      variant="contained"
+                    >
+                      Sign in
+                    </Button>
+                  )}
                 </Box>
                 {/* <Typography
                   color="textSecondary"
