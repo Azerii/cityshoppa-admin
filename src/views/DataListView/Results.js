@@ -27,11 +27,19 @@ const useStyles = makeStyles((theme) => ({
   },
   tableCell: {
     minWidth: '25vw'
+  },
+  clickable: {
+    cursor: 'pointer'
   }
 }));
 
 const Results = ({
-  className, content, contentType, ...rest
+  className,
+  content,
+  contentType,
+  setEdit,
+  setOpenModal,
+  ...rest
 }) => {
   const classes = useStyles();
   // const [selectedContentIds, setSelectedContentIds] = useState([]);
@@ -86,6 +94,13 @@ const Results = ({
     setPage(newPage);
   };
 
+  const handleClick = (contentItem) => {
+    localStorage.setItem('editData', JSON.stringify(contentItem));
+
+    setEdit(true);
+    setOpenModal(true);
+  };
+
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <PerfectScrollbar>
@@ -120,7 +135,9 @@ const Results = ({
               {content.slice(0, limit).map((item) => (
                 <TableRow
                   hover
+                  className={classes.clickable}
                   key={item.id}
+                  onClick={() => handleClick(item)}
                   // selected={selectedContentIds.indexOf(item.id) !== -1}
                 >
                   {/* <TableCell padding="checkbox">
@@ -177,7 +194,9 @@ const Results = ({
 Results.propTypes = {
   className: PropTypes.string,
   content: PropTypes.array.isRequired,
-  contentType: PropTypes.string.isRequired
+  contentType: PropTypes.string.isRequired,
+  setEdit: PropTypes.func.isRequired,
+  setOpenModal: PropTypes.func.isRequired
 };
 
 export default Results;

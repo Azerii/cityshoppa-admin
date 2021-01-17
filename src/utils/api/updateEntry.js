@@ -3,10 +3,10 @@ import { API_HOST } from '../config';
 // import getCollection from './getCollection';
 import getToken from './getToken';
 
-const addEntry = async (collectionType, data) => {
+const updateEntry = async (collectionType, data, id) => {
   const token = getToken();
   try {
-    const res = await axios.post(`${API_HOST}/${collectionType}`, data, {
+    const res = await axios.put(`${API_HOST}/${collectionType}/${id}`, data, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -21,4 +21,4 @@ const addEntry = async (collectionType, data) => {
   return null;
 };
 
-export default addEntry;
+export default updateEntry;

@@ -37,12 +37,11 @@ const fieldTypes = {
   linkToMaps: ['business'],
   address: ['business'],
   city: ['business'],
-  itemImage: ['product', 'service'],
-  displayImages: ['product', 'service']
+  contentImage: ['product', 'service']
 };
 
 const TempForm = ({
-  className, title, setOpen, ...rest
+  className, title, setOpen, fetchContent, ...rest
 }) => {
   const classes = useStyles();
   const [values, setValues] = useState({});
@@ -63,18 +62,38 @@ const TempForm = ({
 
     const tempData = {};
     const formEl = document.forms.addEntry;
+    const fileEl = document.querySelector('#contentImage');
     const formData = new FormData(formEl);
+    const uploads = new FormData();
 
     formData.forEach((value, key) => {
-      tempData[key] = value;
+      if (key !== 'contentImage') {
+        tempData[key] = value;
+      } else if (key === 'contentImage' && fileEl.files.length) {
+        const file = fileEl.files[0];
+
+        uploads.append('files.contentImage', file, file.name);
+      }
 
       return null;
     });
+
+    uploads.append('data', JSON.stringify(tempData));
+
     setLoading(true);
-    const res = await addEntry(pluralize(title), tempData);
+
+    const res = await addEntry(pluralize(title), uploads);
+
     setLoading(false);
+
     if (res) {
-      setOpen(false);
+      fetchContent();
+      setAlert(true);
+      setAlertData({
+        type: 'success',
+        text: 'Entry created'
+      });
+
       return true;
     }
 
@@ -130,9 +149,9 @@ const TempForm = ({
                   label="Username"
                   name="username"
                   id="username"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
-                  value={values.username}
+                  // value={values.username}
                   variant="outlined"
                 />
               </Grid>
@@ -144,9 +163,9 @@ const TempForm = ({
                   label="Name"
                   name="name"
                   id="name"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
-                  value={values.name}
+                  // value={values.name}
                   variant="outlined"
                 />
               </Grid>
@@ -158,9 +177,9 @@ const TempForm = ({
                   label="Email Address"
                   name="email"
                   id="email"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
-                  value={values.email}
+                  // value={values.email}
                   variant="outlined"
                 />
               </Grid>
@@ -172,10 +191,10 @@ const TempForm = ({
                   label="Description"
                   name="description"
                   id="description"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
                   multiline
-                  value={values.description}
+                  // value={values.description}
                   variant="outlined"
                 />
               </Grid>
@@ -187,9 +206,9 @@ const TempForm = ({
                   label="Category"
                   name="category"
                   id="category"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
-                  value={values.category}
+                  // value={values.category}
                   variant="outlined"
                 />
               </Grid>
@@ -204,7 +223,7 @@ const TempForm = ({
                   onChange={handleChange}
                   required
                   multiline
-                  value={values.address}
+                  // value={values.address}
                   variant="outlined"
                 />
               </Grid>
@@ -216,10 +235,10 @@ const TempForm = ({
                   label="City"
                   name="city"
                   id="city"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
                   multiline
-                  value={values.city}
+                  // value={values.city}
                   variant="outlined"
                 />
               </Grid>
@@ -231,10 +250,9 @@ const TempForm = ({
                   label="Price"
                   name="price"
                   id="price"
-                  onChange={handleChange}
-                  type="number"
+                  // onChange={handleChange}
                   required
-                  value={values.price}
+                  // value={values.price}
                   variant="outlined"
                 />
               </Grid>
@@ -246,10 +264,10 @@ const TempForm = ({
                   label="Discount"
                   name="discount"
                   id="discount"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   type="number"
                   required
-                  value={values.discount}
+                  // value={values.discount}
                   variant="outlined"
                 />
               </Grid>
@@ -261,10 +279,10 @@ const TempForm = ({
                   label="Phone"
                   name="phone"
                   id="phone"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   type="text"
                   required
-                  value={values.phone}
+                  // value={values.phone}
                   variant="outlined"
                 />
               </Grid>
@@ -276,11 +294,11 @@ const TempForm = ({
                   label="Business"
                   name="business"
                   id="business"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
                   select
                   SelectProps={{ native: true }}
-                  value={values.business}
+                  // value={values.business}
                   variant="outlined"
                 >
                   {businesses.map((business) => (
@@ -298,32 +316,32 @@ const TempForm = ({
                   label="Link To Maps"
                   name="linkToMaps"
                   id="linkToMaps"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
-                  value={values.linkToMaps}
+                  // value={values.linkToMaps}
                   variant="outlined"
                 />
               </Grid>
             )}
-            {fieldTypes.itemImage.includes(title) && (
+            {fieldTypes.contentImage.includes(title) && (
               <Grid item md={6} xs={12}>
                 <Typography variant="subtitle1" color="secondary">
-                  Item Image
+                  Content Image
                 </Typography>
                 <input
-                  label="Item Image"
-                  name="itemImage"
-                  id="itemImage"
-                  onChange={handleChange}
+                  label="Content Image"
+                  name="contentImage"
+                  id="contentImage"
+                  // onChange={handleChange}
                   required
                   type="file"
                   accept="image/*"
-                  value={values.itemImage}
+                  // value={values.contentImage}
                   variant="outlined"
                 />
               </Grid>
             )}
-            {fieldTypes.displayImages.includes(title) && (
+            {/* {fieldTypes.displayImages.includes(title) && (
               <Grid item md={6} xs={12}>
                 <Typography variant="subtitle1" color="secondary">
                   Display Images
@@ -341,7 +359,7 @@ const TempForm = ({
                   variant="outlined"
                 />
               </Grid>
-            )}
+            )} */}
           </Grid>
         </CardContent>
         <Divider />
@@ -361,8 +379,9 @@ const TempForm = ({
 
 TempForm.propTypes = {
   className: PropTypes.string,
-  title: PropTypes.string,
-  setOpen: PropTypes.func
+  title: PropTypes.string.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  fetchContent: PropTypes.func.isRequired
 };
 
 export default TempForm;

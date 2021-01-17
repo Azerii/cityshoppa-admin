@@ -3,14 +3,14 @@ import { API_HOST } from '../config';
 // import getCollection from './getCollection';
 import getToken from './getToken';
 
-const addEntry = async (collectionType, data) => {
+const deleteEntry = async (collectionType, id) => {
   const token = getToken();
   try {
-    const res = await axios.post(`${API_HOST}/${collectionType}`, data, {
+    const res = await axios.delete(`${API_HOST}/${collectionType}/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    if (res.data.id) {
+    if (res.data) {
       // await getCollection(collectionType);
       return res.data;
     }
@@ -21,4 +21,4 @@ const addEntry = async (collectionType, data) => {
   return null;
 };
 
-export default addEntry;
+export default deleteEntry;

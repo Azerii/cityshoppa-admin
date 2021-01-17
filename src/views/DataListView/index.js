@@ -26,6 +26,7 @@ const DataListView = ({ contentType }) => {
   const [content, setContent] = useState(
     getCollectionList(pluralize(contentType)) || []
   );
+  const [edit, setEdit] = useState(false);
 
   async function fetchContent() {
     setLoading(true);
@@ -45,14 +46,25 @@ const DataListView = ({ contentType }) => {
         title={contentType}
         open={openModal}
         setOpen={setOpenModal}
+        edit={edit}
+        fetchContent={fetchContent}
       />
       <Container maxWidth={false}>
-        <Toolbar contentType={contentType} setOpenModal={setOpenModal} />
+        <Toolbar
+          contentType={contentType}
+          setOpenModal={setOpenModal}
+          setEdit={setEdit}
+        />
         <Box mt={3}>
           {loading ? (
             <Spinner />
           ) : (
-            <Results content={content} contentType={contentType} />
+            <Results
+              content={content}
+              contentType={contentType}
+              setEdit={setEdit}
+              setOpenModal={setOpenModal}
+            />
           )}
         </Box>
       </Container>

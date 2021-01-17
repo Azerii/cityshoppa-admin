@@ -8,19 +8,17 @@ const business = [
   'address',
   'city',
   'linkToMaps'
-  // 'products',
-  // 'services'
 ];
 const product = [
   'id',
   'name',
-  'descripion',
+  'description',
   'price',
   'discount',
   'business',
-  'categories'
+  'category'
 ];
-const service = ['id', 'name', 'descripion', 'business', 'categories'];
+const service = ['id', 'name', 'description', 'business', 'category'];
 const category = ['id', 'name'];
 const city = ['id', 'name', 'province'];
 

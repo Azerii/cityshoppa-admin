@@ -2,12 +2,19 @@ import axios from 'axios';
 import { API_HOST } from '../config';
 import getToken from './getToken';
 
-const getCollection = async (collectionType) => {
+const getCollection = async (collectionType, id) => {
   const token = getToken();
+  let res;
   try {
-    const res = await axios.get(`${API_HOST}/${collectionType}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    if (id) {
+      res = await axios.get(`${API_HOST}/${collectionType}/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } else {
+      res = await axios.get(`${API_HOST}/${collectionType}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
 
     if (res.data) {
       const count = res.data.length;

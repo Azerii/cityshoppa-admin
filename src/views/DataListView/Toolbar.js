@@ -24,7 +24,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Toolbar = ({
-  className, contentType, setOpenModal, ...rest
+  className,
+  contentType,
+  setOpenModal,
+  setEdit,
+  ...rest
 }) => {
   const classes = useStyles();
 
@@ -40,7 +44,10 @@ const Toolbar = ({
         <Button
           color="primary"
           variant="contained"
-          onClick={() => setOpenModal(true)}
+          onClick={() => {
+            setOpenModal(true);
+            setEdit(false);
+          }}
         >
           Add New
           {' '}
@@ -79,7 +86,8 @@ const Toolbar = ({
 Toolbar.propTypes = {
   className: PropTypes.string,
   contentType: PropTypes.string.isRequired,
-  setOpenModal: PropTypes.func.isRequired
+  setOpenModal: PropTypes.func.isRequired,
+  setEdit: PropTypes.func.isRequired
 };
 
 export default Toolbar;
