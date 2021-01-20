@@ -42,7 +42,8 @@ const fieldTypes = {
   linkToMaps: ['business'],
   address: ['business'],
   city: ['business'],
-  contentImage: ['product', 'service']
+  contentImage: ['product', 'service'],
+  logo: ['business']
 };
 
 const EditForm = ({
@@ -339,11 +340,11 @@ const EditForm = ({
                     required
                     select
                     SelectProps={{ native: true }}
-                    value={values.business}
+                    value={values.business.name}
                     variant="outlined"
                   >
                     {businesses.map((business) => (
-                      <option key={business.name} value={business.name}>
+                      <option key={business.name} value={business.id}>
                         {business.name}
                       </option>
                     ))}
@@ -373,6 +374,24 @@ const EditForm = ({
                     label="Content Image"
                     name="contentImage"
                     id="contentImage"
+                    // onChange={handleChange}
+                    // required
+                    type="file"
+                    accept="image/*"
+                    // value={values.contentImage}
+                    variant="outlined"
+                  />
+                </Grid>
+              )}
+              {fieldTypes.logo.includes(title) && (
+                <Grid item md={6} xs={12}>
+                  <Typography variant="subtitle1" color="secondary">
+                    Logo
+                  </Typography>
+                  <input
+                    label="Content Image"
+                    name="logo"
+                    id="logo"
                     // onChange={handleChange}
                     // required
                     type="file"

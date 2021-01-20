@@ -21,6 +21,8 @@ const product = [
 const service = ['id', 'name', 'description', 'business', 'category'];
 const category = ['id', 'name'];
 const city = ['id', 'name', 'province'];
+const caption = ['id', 'heading', 'subheading'];
+const feature = ['id', 'name'];
 
 export default {
   user,
@@ -28,5 +30,7 @@ export default {
   product,
   service,
   category,
-  city
+  city,
+  caption,
+  feature
 };

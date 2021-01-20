@@ -46,6 +46,7 @@ const Results = ({
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const model = models.default[contentType];
+  const listTypeModels = ['business', 'category', 'city'];
 
   // const handleSelectAll = (event) => {
   //   let newSelectedContentIds;
@@ -147,13 +148,25 @@ const Results = ({
                       value="true"
                     />
                   </TableCell> */}
-                  {model.map((field) => (
-                    <TableCell key={uuid()}>
-                      {item[field] && item[field].length > 25
-                        ? `${item[field].substr(0, 100)}...`
-                        : item[field]}
-                    </TableCell>
-                  ))}
+                  {model.map((field) => {
+                    if (listTypeModels.includes(field)) {
+                      return (
+                        <TableCell key={uuid()}>
+                          {/* {item[field] && item[field].name.length > 25
+                            ? `${item[field].name.substr(0, 100)}...`
+                            : item[field].name} */}
+                          {item[field].name}
+                        </TableCell>
+                      );
+                    }
+                    return (
+                      <TableCell key={uuid()}>
+                        {item[field] && item[field].length > 25
+                          ? `${item[field].substr(0, 100)}...`
+                          : item[field]}
+                      </TableCell>
+                    );
+                  })}
                   {/* <TableCell>
                     <Box alignItems="center" display="flex">
                       <Avatar className={classes.avatar} src={item.avatarUrl}>

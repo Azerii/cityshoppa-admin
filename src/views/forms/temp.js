@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 const fieldTypes = {
   username: ['user'],
   email: ['user', 'business'],
-  name: ['business', 'product', 'service'],
+  name: ['business', 'product', 'service', 'category', 'city'],
   description: ['business', 'product', 'service'],
   business: ['product', 'service'],
   discount: ['product'],
@@ -37,25 +37,23 @@ const fieldTypes = {
   linkToMaps: ['business'],
   address: ['business'],
   city: ['business'],
-  contentImage: ['product', 'service']
+  logo: ['business'],
+  contentImage: ['product', 'service', 'feature'],
+  heading: ['caption'],
+  subheading: ['caption'],
+  province: ['city']
 };
 
 const TempForm = ({
   className, title, setOpen, fetchContent, ...rest
 }) => {
   const classes = useStyles();
-  const [values, setValues] = useState({});
   const [businesses, setBusinesses] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [alert, setAlert] = useState(false);
   const [alertData, setAlertData] = useState({ type: 'warning', text: '' });
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -112,8 +110,22 @@ const TempForm = ({
     if (res) setBusinesses(res);
   }
 
+  async function fetchCities() {
+    const res = await getCollection('cities');
+    // console.log(res);
+    if (res) setCities(res);
+  }
+
+  async function fetchCategories() {
+    const res = await getCollection('categories');
+    // console.log(res);
+    if (res) setCategories(res);
+  }
+
   useEffect(() => {
     fetchBusinesses();
+    fetchCategories();
+    fetchCities();
     // eslint-disable-next-line
   }, []);
 
@@ -203,14 +215,22 @@ const TempForm = ({
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
-                  label="Category"
+                  label="City"
                   name="category"
                   id="category"
                   // onChange={handleChange}
                   required
-                  // value={values.category}
+                  select
+                  SelectProps={{ native: true }}
+                  // value={values.business}
                   variant="outlined"
-                />
+                >
+                  {categories.map((category) => (
+                    <option key={category.name} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </TextField>
               </Grid>
             )}
             {fieldTypes.address.includes(title) && (
@@ -220,7 +240,7 @@ const TempForm = ({
                   label="Address"
                   name="address"
                   id="address"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
                   multiline
                   // value={values.address}
@@ -237,10 +257,17 @@ const TempForm = ({
                   id="city"
                   // onChange={handleChange}
                   required
-                  multiline
-                  // value={values.city}
+                  select
+                  SelectProps={{ native: true }}
+                  // value={values.business}
                   variant="outlined"
-                />
+                >
+                  {cities.map((city) => (
+                    <option key={city.name} value={city.id}>
+                      {city.name}
+                    </option>
+                  ))}
+                </TextField>
               </Grid>
             )}
             {fieldTypes.price.includes(title) && (
@@ -302,7 +329,7 @@ const TempForm = ({
                   variant="outlined"
                 >
                   {businesses.map((business) => (
-                    <option key={business.name} value={business.name}>
+                    <option key={business.name} value={business.id}>
                       {business.name}
                     </option>
                   ))}
@@ -341,25 +368,57 @@ const TempForm = ({
                 />
               </Grid>
             )}
-            {/* {fieldTypes.displayImages.includes(title) && (
+            {fieldTypes.logo.includes(title) && (
               <Grid item md={6} xs={12}>
                 <Typography variant="subtitle1" color="secondary">
-                  Display Images
+                  Logo
                 </Typography>
                 <input
-                  label="Display Image"
-                  name="displayImages"
-                  id="displayImages"
-                  onChange={handleChange}
+                  label="Logo"
+                  name="logo"
+                  id="logo"
+                  // onChange={handleChange}
                   required
                   type="file"
                   accept="image/*"
-                  multiple
-                  value={values.displayImages}
+                  // value={values.logo}
                   variant="outlined"
                 />
               </Grid>
-            )} */}
+            )}
+            {fieldTypes.heading.includes(title) && (
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  label="Heading"
+                  name="heading"
+                  id="heading"
+                  variant="outlined"
+                />
+              </Grid>
+            )}
+            {fieldTypes.subheading.includes(title) && (
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  label="Subheading"
+                  name="subheading"
+                  id="subheading"
+                  variant="outlined"
+                />
+              </Grid>
+            )}
+            {fieldTypes.province.includes(title) && (
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  label="Province"
+                  name="province"
+                  id="province"
+                  variant="outlined"
+                />
+              </Grid>
+            )}
           </Grid>
         </CardContent>
         <Divider />

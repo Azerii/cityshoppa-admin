@@ -12,16 +12,16 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import {
-  // AlertCircle as AlertCircleIcon,
-  BarChart as BarChartIcon
-  // Lock as LockIcon,
-  // Settings as SettingsIcon
-  // ShoppingBag as ShoppingBagIcon,
-  // User as UserIcon,
-  // UserPlus as UserPlusIcon,
-  // Users as UsersIcon
-} from 'react-feather';
+// import {
+//   AlertCircle as AlertCircleIcon,
+//   BarChart as BarChartIcon,
+//   Lock as LockIcon,
+//   Settings as SettingsIcon,
+//   ShoppingBag as ShoppingBagIcon,
+//   User as UserIcon,
+//   UserPlus as UserPlusIcon,
+//   Users as UsersIcon
+// } from 'react-feather';
 import NavItem from './NavItem';
 
 const user = {
@@ -31,11 +31,11 @@ const user = {
 };
 
 const items = [
-  {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
-  },
+  // {
+  //   href: '/app/dashboard',
+  //   icon: BarChartIcon,
+  //   title: 'Dashboard'
+  // },
   {
     href: '/app/users',
     // icon: UsersIcon,
@@ -52,6 +52,22 @@ const items = [
   {
     href: '/app/services',
     title: 'Services'
+  },
+  {
+    href: '/app/categories',
+    title: 'Categories'
+  },
+  {
+    href: '/app/cities',
+    title: 'Cities'
+  },
+  {
+    href: '/app/captions',
+    title: 'Captions'
+  },
+  {
+    href: '/app/features',
+    title: 'Features'
   }
 
   // {

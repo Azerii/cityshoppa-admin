@@ -39,9 +39,15 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage && !localStorage.getItem('admin:root').length) {
+    if (
+      !localStorage.getItem('admin:root')
+      || !localStorage.getItem('admin:root').length
+    ) {
       navigate('/login');
-    } else if (localStorage && localStorage.getItem('admin:root').length) {
+    } else if (
+      localStorage.getItem('admin:root')
+      && localStorage.getItem('admin:root').length
+    ) {
       const data = JSON.parse(localStorage.getItem('admin:root'));
       const d = new Date().getTime();
       const expiry = data.tokenExpiry;

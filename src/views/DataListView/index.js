@@ -41,7 +41,7 @@ const DataListView = ({ contentType }) => {
   }, []);
 
   return (
-    <Page className={classes.root} title="Users">
+    <Page className={classes.root} title={pluralize(contentType)}>
       <FullScreenDialog
         title={contentType}
         open={openModal}
