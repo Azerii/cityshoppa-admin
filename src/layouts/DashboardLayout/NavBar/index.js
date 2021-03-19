@@ -50,10 +50,6 @@ const items = [
     title: 'Products'
   },
   {
-    href: '/app/services',
-    title: 'Services'
-  },
-  {
     href: '/app/categories',
     title: 'Categories'
   },
@@ -68,6 +64,14 @@ const items = [
   {
     href: '/app/features',
     title: 'Features'
+  },
+  {
+    href: '/app/brands',
+    title: 'Brands'
+  },
+  {
+    href: '/app/donation',
+    title: 'Donation'
   }
 
   // {
@@ -136,7 +140,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           className={classes.avatar}
           component={RouterLink}
           // src={user.avatar}
-          to="/app/account"
+          to="/app/users"
         />
         <Typography className={classes.name} color="textPrimary" variant="h5">
           {user.name}

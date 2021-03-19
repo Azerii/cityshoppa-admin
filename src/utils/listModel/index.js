@@ -18,19 +18,21 @@ const product = [
   'business',
   'category'
 ];
-const service = ['id', 'name', 'description', 'business', 'category'];
 const category = ['id', 'name'];
 const city = ['id', 'name', 'province'];
 const caption = ['id', 'heading', 'subheading'];
-const feature = ['id', 'name'];
+const feature = ['id'];
+const donation = ['id', 'amount'];
+const brand = ['id'];
 
 export default {
   user,
   business,
   product,
-  service,
   category,
   city,
   caption,
-  feature
+  feature,
+  brand,
+  donation
 };

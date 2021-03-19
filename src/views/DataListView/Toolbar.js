@@ -49,7 +49,7 @@ const Toolbar = ({
             setEdit(false);
           }}
         >
-          Add New
+          {contentType === 'donation' ? 'update' : 'add new'}
           {' '}
           {contentType}
         </Button>

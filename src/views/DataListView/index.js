@@ -30,9 +30,18 @@ const DataListView = ({ contentType }) => {
 
   async function fetchContent() {
     setLoading(true);
-    const res = await getCollection(pluralize(contentType));
+    let res;
+    if (contentType === 'donation') {
+      res = await getCollection(contentType);
+    } else {
+      res = await getCollection(pluralize(contentType));
+    }
     setLoading(false);
-    if (res) setContent(res);
+    if (res && contentType === 'donation') {
+      setContent([res]);
+    } else if (res) {
+      setContent(res);
+    }
   }
 
   useEffect(() => {

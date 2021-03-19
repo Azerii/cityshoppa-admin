@@ -6,9 +6,16 @@ import getToken from './getToken';
 const updateEntry = async (collectionType, data, id) => {
   const token = getToken();
   try {
-    const res = await axios.put(`${API_HOST}/${collectionType}/${id}`, data, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    let res;
+    if (id) {
+      res = await axios.put(`${API_HOST}/${collectionType}/${id}`, data, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } else {
+      res = await axios.put(`${API_HOST}/${collectionType}`, data, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
 
     if (res.data.id) {
       // await getCollection(collectionType);

@@ -56,7 +56,7 @@ const LoginView = () => {
 
       localStorage.setItem('admin:root', JSON.stringify(state));
 
-      window.location.replace('/app/dashboard');
+      window.location.replace('/app/users');
     } else {
       setAlert(true);
       setAlertData({

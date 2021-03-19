@@ -10,12 +10,14 @@ import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
 import UserListView from 'src/views/users';
 import ProductListView from './views/products';
-import ServiceListView from './views/services';
+// import ServiceListView from './views/services';
 import CategoryListView from './views/categories';
 import CityListView from './views/cities';
 import BusinessListView from './views/businesses';
 import CaptionListView from './views/captions';
 import FeatureListView from './views/features';
+import DonationListView from './views/donations';
+import BrandListView from './views/brands';
 
 const routes = [
   {
@@ -27,11 +29,12 @@ const routes = [
       { path: 'users', element: <UserListView /> },
       { path: 'businesses', element: <BusinessListView /> },
       { path: 'products', element: <ProductListView /> },
-      { path: 'services', element: <ServiceListView /> },
       { path: 'categories', element: <CategoryListView /> },
       { path: 'captions', element: <CaptionListView /> },
       { path: 'cities', element: <CityListView /> },
+      { path: 'brands', element: <BrandListView /> },
       { path: 'features', element: <FeatureListView /> },
+      { path: 'donation', element: <DonationListView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

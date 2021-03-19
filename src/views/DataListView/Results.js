@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -11,7 +11,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
+  // TablePagination,
   TableRow,
   // Typography,
   makeStyles
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2)
   },
   tableCell: {
-    minWidth: '25vw'
+    minWidth: '20vw'
   },
   clickable: {
     cursor: 'pointer'
@@ -43,8 +43,8 @@ const Results = ({
 }) => {
   const classes = useStyles();
   // const [selectedContentIds, setSelectedContentIds] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
+  // const [limit, setLimit] = useState(10);
+  // const [page, setPage] = useState(0);
   const model = models.default[contentType];
   const listTypeModels = ['business', 'category', 'city'];
 
@@ -87,13 +87,13 @@ const Results = ({
   //   setSelectedContentIds(newSelectedContentIds);
   // };
 
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
+  // const handleLimitChange = (event) => {
+  //   setLimit(event.target.value);
+  // };
 
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
+  // const handlePageChange = (event, newPage) => {
+  //   setPage(newPage);
+  // };
 
   const handleClick = (contentItem) => {
     localStorage.setItem('editData', JSON.stringify(contentItem));
@@ -133,7 +133,7 @@ const Results = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {content.slice(0, limit).map((item) => (
+              {content.map((item) => (
                 <TableRow
                   hover
                   className={classes.clickable}
@@ -155,7 +155,7 @@ const Results = ({
                           {/* {item[field] && item[field].name.length > 25
                             ? `${item[field].name.substr(0, 100)}...`
                             : item[field].name} */}
-                          {item[field].name}
+                          {item[field] && item[field].name}
                         </TableCell>
                       );
                     }
@@ -191,7 +191,7 @@ const Results = ({
           </Table>
         </Box>
       </PerfectScrollbar>
-      <TablePagination
+      {/* <TablePagination
         component="div"
         count={content.length}
         onChangePage={handlePageChange}
@@ -199,7 +199,7 @@ const Results = ({
         page={page}
         rowsPerPage={limit}
         rowsPerPageOptions={[5, 10, 25]}
-      />
+      /> */}
     </Card>
   );
 };

@@ -40,11 +40,6 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (
-      !localStorage.getItem('admin:root')
-      || !localStorage.getItem('admin:root').length
-    ) {
-      navigate('/login');
-    } else if (
       localStorage.getItem('admin:root')
       && localStorage.getItem('admin:root').length
     ) {
@@ -55,6 +50,11 @@ const DashboardLayout = () => {
       if (d >= expiry) {
         localStorage.setItem('admin:root', '');
       }
+    } else if (
+      !localStorage.getItem('admin:root')
+      || !localStorage.getItem('admin:root').length
+    ) {
+      navigate('/login');
     }
   });
 
